@@ -5,6 +5,7 @@
     font-size:2.5em;
     font-family:monospace;
     padding:9px;
+    overflow:scroll;
 }
 .result li{
 /*    list-style-type:decimal-leading-zero;*/
