@@ -1,0 +1,16 @@
+{
+  "name": "evileval",
+  "version": "0.0.1",
+  "authors": [
+    "Anam Ahmed <anam.ahmed@codemate.com>"
+  ],
+  "description": "Evil Evaluator",
+  "main": "index.html",
+  "keywords": [
+    "eval"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "codemirror": "~5.4.0"
+  }
+}
