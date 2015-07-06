@@ -9,7 +9,7 @@ A small and **highly experimental** project for live code demonstration in JavaS
 
 Write code in the top part, the bottom part acts like the console output. every `console.log` will output there.
 
-To run the code press the run button or press <kbd>Ctrl</kbd>+<kbd>K</kbd>
+To run the code press the run button or press <kbd>Ctrl</kbd>+<kbd>E</kbd>
 
 ###Contributing
 
