@@ -4,6 +4,7 @@ var fakeConsole = {
         var line = document.createElement('li');
         line.innerHTML = output;
         document.querySelector('.result .lines').appendChild(line);
+        console.log(output);
     }
 };
 var replManager = CodeMirror(repl,{
