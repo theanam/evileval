@@ -41,15 +41,42 @@ var replManager = CodeMirror(repl,{
     theme:'monokai',
     lineNumbers:true
 });
-
-document.querySelector('.action').addEventListener('click',evaluate);
-document.addEventListener('keyup',function(e){
-    if(e.ctrlKey && e.key=='e'){
-        evaluate();
+replManager.on('change',function() {
+    if(isContinuous) {
+        evaluateDebounced()
     }
 })
+
+document.querySelector('.action').addEventListener('click',function(e){
+    if(e.shiftKey || isContinuous) {
+        toggleContinuous();
+    } else {
+        evaluate();
+    }
+});
+document.addEventListener('keyup',function(e){
+    if(e.ctrlKey && e.key=='e'){
+        if(e.shiftKey || isContinuous) {
+            toggleContinuous();
+        } else {
+            evaluate();
+        }
+    }
+})
+
+var isContinuous = false;
+function toggleContinuous(){
+    isContinuous = !isContinuous;
+    document.querySelector('.action').classList.toggle('active', isContinuous);
+}
+
+var worker;
 function evaluate(){
-    var worker = new Worker(window.URL.createObjectURL(new Blob([
+    if(worker) {
+        worker.terminate()
+        worker = null
+    }
+    worker = new Worker(window.URL.createObjectURL(new Blob([
         "var output = [];\n"+
         "\n"+
         "var fakeConsole = {\n"+
@@ -116,3 +143,17 @@ function evaluate(){
 
     window.scrollTo(0, document.body.scrollHeight);
 };
+
+// Taken from https://remysharp.com/2010/07/21/throttling-function-calls
+function debounce(fn, delay){
+    var timer = null;
+    return function () {
+        var context = this, args = arguments;
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+            fn.apply(context, args);
+        }, delay);
+    };
+}
+
+var evaluateDebounced = debounce(evaluate, 1000);
