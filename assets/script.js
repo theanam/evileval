@@ -3,9 +3,34 @@ var fakeConsole = Object.create(console);
 
 fakeConsole.log = function(){
     // Handles multiple arguments for console
-    // doesn't handle weird cases such as undefined etc. In those cases an empty string is placed
+    // handle false like values
+    var outputArray = [];
+    for(i=0;i<arguments.length;i++){
+        var currentElement = arguments[i];
+        // if not NaN
+        if(currentElement==currentElement){
+            if(currentElement===null){
+                outputArray.push("null");
+            }
+            else if(currentElement===undefined){
+                outputArray.push("undefined");
+            }
+            else if(Array.isArray(currentElement)){ 
+                //handle arrays including empty ones
+                var arrayBody = "["+currentElement.join(",")+"]";
+                outputArray.push(arrayBody);
+            }
+            else{
+                outputArray.push(currentElement);
+            }
+        }
+        else{
+            outputArray.push("NaN");
+        }
+    }
+
     var line = document.createElement('li'),
-        output = Array.prototype.join.call(arguments, ", ");
+        output = Array.prototype.join.call(outputArray, ", ");
 
     line.innerHTML = output;
     document.querySelector('.result .lines').appendChild(line);
