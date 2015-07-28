@@ -55,7 +55,7 @@ document.querySelector('.action').addEventListener('click',function(e){
     }
 });
 document.addEventListener('keyup',function(e){
-    if(e.ctrlKey && e.keyCOde===13){
+    if(e.ctrlKey && e.keyCode===13){
         if(e.shiftKey || isContinuous) {
             toggleContinuous();
         } else {
