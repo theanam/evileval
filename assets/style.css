@@ -166,3 +166,6 @@ background:#3498db url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCA
     left:20px;
     transition:opacity 0.5s;
 }
+.embedded .info{
+    display:none;
+}

@@ -9,11 +9,13 @@ if(top!=self){
 }
 
 //hide info
+if(!embedded){
 setTimeout(function(){
     var infowindow=document.querySelector('.info');
     infowindow.style.opacity=0;
     setTimeout(function(){infowindow.style.display="none"},500); //hide afrer animation
 },2000);
+}
 var repl = document.querySelector('.repl');
 var fakeConsole = Object.create(console);
 //dress up output for better understanding
