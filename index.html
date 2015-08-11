@@ -10,7 +10,18 @@
     <title>Evil Evaluator</title>
 </head>
 <body>
-
+   <div class="embed-button"></div>
+   <div class="embed-code">
+       <textarea id="embed"></textarea>
+       <div>
+           copy and paste to embed this evileval
+       </div>
+       <p>Note:Do not use this to embed larger code.</p>
+       <span class="close embed-close">&#10006; Close</span>
+   </div>
+    <div class="tabs">
+        <div class="btn btn-repl active">Editor</div><div class="btn btn-console">Console</div>
+    </div>
     <div class="repl">
 
     </div>
@@ -21,6 +32,9 @@
     </div>
     <div class="action">
 
+    </div>
+    <div class="info">
+    ⓘ <kbd>Shift</kbd> + <kbd>click</kbd> the play button to start continuous mode
     </div>
     <script src="bower_components/codemirror/lib/codemirror.js"></script>
     <script src="bower_components/codemirror/mode/javascript/javascript.js"></script>
