@@ -32,6 +32,7 @@ npm i -g bower
 bower install
 ```
 
+>> Don't forget to update `baseUrl` variable in the `assets/script.js` file for embed to work properly
 
 ### Contributing
 

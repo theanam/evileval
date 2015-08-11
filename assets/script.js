@@ -2,7 +2,7 @@
 var embedded = false;
 //change it to the app url, otherwise embed won't work
 //make sure you're including the trailing hash (#)
-var baseUrl="http://localhost:8080/#"; 
+var baseUrl="http://theanam.github.io/evileval/#"; 
 if(top!=self){
     document.querySelector('body').classList.add('embedded');
     embedded = true;
