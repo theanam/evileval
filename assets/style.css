@@ -1,5 +1,9 @@
+body.embedded{
+    background-color:#272822;
+}
 .embedded .CodeMirror{
-    font-size:1.1em !important;    
+    font-size:1.1em !important;
+    height:90%;
 }
 .CodeMirror{
     /*editor font size*/
@@ -69,7 +73,7 @@ background:#3498db url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCA
     background-color:#272822;
 }
 .embedded .repl{
-    height:100%;
+    height:90%;
     top:30px;
     
 }
@@ -87,6 +91,8 @@ background:#3498db url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCA
     margin-top:30px;
     font-size:1.1em;
     padding:4px;
+    background-color:white;
+    height:calc(90vh - 30px);
 }
 .result li{
 /*    list-style-type:decimal-leading-zero;*/
@@ -96,6 +102,7 @@ background:#3498db url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCA
     background:#ddd;
 }
 .action{
+    z-index:5000;
     width:100px;
     height:100px;
     border-radius:50%;
@@ -165,6 +172,9 @@ background:#3498db url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCA
     bottom:40px;
     left:20px;
     transition:opacity 0.5s;
+}
+.embedded .gh-ribbon{
+    display:none;
 }
 .embedded .info{
     display:none;
