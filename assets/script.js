@@ -1,9 +1,7 @@
 //check if app is embedded
 var embedded = false;
-//change it to the app url, otherwise embed won't work
-//make sure you're including the trailing hash (#)
-var baseUrl="http://theanam.github.io/evileval/#"; 
-if(top!=self){
+var baseUrl=document.URL+"#"; 
+if(top!=self && location.hash.length>2){
     document.querySelector('body').classList.add('embedded');
     embedded = true;
 }
