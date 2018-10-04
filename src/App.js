@@ -5,7 +5,8 @@ import favicon from './assets/favicon.png';
 /*Icons*/
 import splitIcon from './assets/spliticon.png';
 import shareSVG from './assets/share-alt.svg'; 
-/*icons */
+/*CORE */
+import evaluate from './evaluator';
 class App extends Component {
     state = {
         horizontal:true,
@@ -16,6 +17,19 @@ class App extends Component {
         if(Number.isInteger(fontSize)){
             this.setState({fontSize})
         }
+    }
+    time_out=null;
+    evaluateCode =(code)=> {
+        if(this.time_out){
+            clearTimeout(this.time_out);
+            this.time_out = null;
+        }
+        this.time_out = setTimeout(()=>this.doEval(code),800)
+    }
+    doEval=async (code)=>{
+        this.time_out = null;
+        let result = await evaluate(code);
+        console.log(result);
     }
     render() { 
         return ( <div className="container" style={{height:'100%'}}>
@@ -49,7 +63,7 @@ class App extends Component {
             {/* BODY */}
             <div className="container" 
             style={{...styles.container,height:'100%',flexDirection:`${this.state.horizontal?'row':'column'}`}}>
-                <EvilEditor fontSize={this.state.fontSize} 
+                <EvilEditor onChange={this.evaluateCode} fontSize={this.state.fontSize} 
                 style={{flex:1,height:'auto',width:`${this.state.horizontal?'auto':'100%'}`}}></EvilEditor>
                 <div style={{...styles.result,fontSize:`${this.state.fontSize}px`,...getBorder(this.state.horizontal)}}>
                 hello
