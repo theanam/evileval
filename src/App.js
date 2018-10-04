@@ -74,7 +74,7 @@ const styles = {
         alignItems:'center',
         padding:`8px 10px`,
         color:colors.WHITE,
-        backgroundColor:colors.EDITOR_BG,
+        backgroundColor:colors.DARK,
         boxShadow:`0px 0px 4px 0px ${colors.EDITOR_HIGHLIGHT}`
     },
     toolbar:{
