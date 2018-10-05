@@ -37,8 +37,7 @@ class App extends Component {
         }
         //iFrame?
         if(window.self !== window.top){
-            this.setState({embedded:true});
-            this.changeFontSize("14");
+            this.setState({embedded:true,fontSize:14});
         }
         //take care of the code in the URL
         let hash = window.location.hash;
