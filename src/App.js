@@ -33,7 +33,7 @@ class App extends Component {
     componentDidMount(){
         // Mobile check
         if(window.innerWidth<window.innerHeight){
-            this.setState({horizontal:false})
+            this.setState({horizontal:false,fontSize:14})
         }
         //iFrame?
         if(window.self !== window.top){
