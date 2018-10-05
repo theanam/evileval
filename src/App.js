@@ -4,13 +4,14 @@ import EvilEditor from './components/theeditor';
 import favicon from './assets/favicon.png';
 /*Icons*/
 import splitIcon from './assets/spliticon.png';
-import shareSVG from './assets/share-alt.svg'; 
+import shareSVG from './assets/share-alt.svg';
 /*CORE */
 import evaluate from './evaluator';
+import Conditional from 'react-simple-conditional';
 // RENDER LIST
 function Output(props){
     return (<div
-    style={{...props.style,...styles.resultParts,backgroundColor:(props.index%2)?'rgba(255,255,255,0.2)':'rgba(0,0,0,0.2)'}}>
+    style={{...props.style,...styles.resultParts,backgroundColor:(props.index%2)?'rgba(255,255,255,0.1)':'rgba(0,0,0,0.1)'}}>
         {props.children}
     </div>)
 }
@@ -22,7 +23,25 @@ class App extends Component {
             error:false,
             data:[]
         },
-        code:""
+        code:"",
+        embedded:false,
+        fromURL:false,
+        showEmbedWindow:false
+    }
+    componentDidMount(){
+        //iFrame?
+        if(window.self !== window.top){
+            this.setState({embedded:true})
+        }
+        //take care of the code in the URL
+        let hash = window.location.hash;
+        if(!hash) return true;
+        let rex = /\/s\/(.+)/ig;
+        let result = rex.exec(hash);
+        if(!result) return true;
+        let code = atob(result[1]);
+        this.setState({code,fromURL:true});
+        this.evaluateCode(code); 
     }
     changeFontSize=(e)=>{
         let fontSize = +e.target.value;
@@ -49,6 +68,23 @@ class App extends Component {
                 code:""
             })
         }
+    }
+    copy=(type)=>{
+        let target=null;
+        if(type=='embed'){
+            target = this.embedref;
+        }
+        else if(type=='url'){
+            target = this.urlref;
+        }
+        else{
+            return false;
+        }
+        // Using the old API for maximum compatibility
+        target.focus();
+        target.select();
+        document.execCommand('copy');
+        console.log("Copied");
     }
     doEval=async (code)=>{
         this.setState({code})
@@ -86,7 +122,9 @@ class App extends Component {
                         onClick={e=>this.setState({horizontal:!this.state.horizontal})}/>
                     </div>
                     <div style={styles.toolholder}>
-                        <img src={shareSVG} style={{...styles.tool,transform:`scale(1.14)`}} alt="Share"/>
+                        <img src={shareSVG} 
+                        onClick={e=>this.setState({showEmbedWindow:true})}
+                        style={{...styles.tool,transform:`scale(1.14)`}} alt="Share"/>
                     </div>
                 </div>
             </div>
@@ -100,6 +138,23 @@ class App extends Component {
                     {this.state.outputData.data.map((d,i)=><Output style={{color:`${this.state.outputData.error?colors.RED:colors.WHITE}`}} key={i} index={i}>{d}</Output>)}
                 </div>
             </div>
+            {/* EMBED WINDOW */}
+            <Conditional style={styles.embedw} condition={this.state.showEmbedWindow}>
+                <div style={styles.embedholder}>
+                    <p style={{marginTop:15}}>Link to this eval <span style={styles.copybtn} onClick={e=>this.copy('url')}>Copy</span></p>
+                    <input value={`https://theanam.github.io/evileval/#/s/${btoa(this.state.code)}`}
+                    ref={r=>this.urlref = r} style={styles.embfields}></input>
+                    <p style={{marginTop:15}}>Embed Code of this eval <span style={styles.copybtn} onClick={e=>this.copy('embed')}>Copy</span></p>
+                    <textarea ref={r=>this.embedref = r}
+                    style={{...styles.embfields,height:'5em'}}
+                    value={`<iframe width="100%" height="250px" src="https://theanam.github.io/evileval/#/s/${btoa(this.state.code)}"></iframe>`}></textarea>
+                    <div style={{marginTop:20,textAlign:'right'}}>
+                        <div style={styles.closebutton} onClick={e=>this.setState({showEmbedWindow:false})}>
+                            Close
+                        </div>
+                    </div>
+                </div>
+            </Conditional>
         </div> );
     }
 }
@@ -145,5 +200,55 @@ const styles = {
     },
     resultParts:{
         padding:`0.083em 10px`
+    },
+    embedw:{
+        position:'fixed',
+        top:0,
+        left:0,
+        width:'100%',
+        height:'100%',
+        backgroundColor:`rgba(0,0,0,0.3)`,
+        zIndex:3000,
+        display:`flex`,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    embedholder:{
+        padding:25,
+        backgroundColor:colors.DARK,
+        color:colors.WHITE,
+        minWidth:`40vw`,
+        maxWidth:`80vw`,
+        borderRadius:6,
+        boxShadow:`2px 2px 8px 0px ${colors.DARK_SHADOW}`,
+        display:'flex',
+        flexDirection:'column',
+        alignItems:'stretch'
+    },
+    embfields:{
+        padding:7,
+        borderRadius:4,
+        marginTop:15,
+        fontSize:16,
+        backgroundColor:'#555',
+        boxShadow:'none',
+        border:`1px solid #333`,
+        color:`#eee`
+    },
+    copybtn:{
+        display:'inline-block',
+        backgroundColor:colors.BLUE,
+        color:colors.WHITE,
+        padding:`3px 4px`,
+        borderRadius:3,
+        cursor:'pointer'
+    },
+    closebutton:{
+        backgroundColor:colors.BLUE,
+        color:colors.WHITE,
+        padding:`15px 20px`,
+        display:'inline-block',
+        borderRadius:4,
+        cursor:'pointer'
     }
 }
