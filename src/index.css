@@ -1,0 +1,11 @@
+*{
+    margin:0;
+    padding:0;
+}
+html,body{
+    height:100%;
+    font-family: sans-serif;
+}
+.root,.container{
+    height:100%;
+}
