@@ -181,10 +181,11 @@ class App extends Component {
 export default App;
 function getBorder(horiz){
     if(horiz) return {
-        borderLeft:`2px solid ${colors.BLUE}`
+        borderLeft:`2px solid ${colors.BLUE}`,
+        maxWidth:'50%'
     }
     else return {
-       borderTop:`2px solid ${colors.BLUE}`
+       borderTop:`2px solid ${colors.BLUE}`,
     }
 }
 const styles = {
@@ -215,8 +216,7 @@ const styles = {
         backgroundColor:colors.EDITOR_SIDE,
         color:colors.WHITE,
         boxSizing:`border-box`,
-        fontFamily: 'monospace',
-        maxWidth:'50%'
+        fontFamily: 'monospace'
     },
     resultParts:{
         padding:`0.083em 10px`
