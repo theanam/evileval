@@ -8,6 +8,7 @@ function EvilEditor(props){
         theme="monokai"
         name="evileval"
         style={props.style}
+        value={props.value}
         // onLoad={props.onLoad}
         onChange={props.onChange}
         fontSize={props.fontSize||20}

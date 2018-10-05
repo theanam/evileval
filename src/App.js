@@ -7,10 +7,22 @@ import splitIcon from './assets/spliticon.png';
 import shareSVG from './assets/share-alt.svg'; 
 /*CORE */
 import evaluate from './evaluator';
+// RENDER LIST
+function Output(props){
+    return (<div 
+    style={{...styles.resultParts,backgroundColor:(props.index%2)?'rgba(255,255,255,0.2)':'rgba(0,0,0,0.2)'}}>
+        {props.children}
+    </div>)
+}
 class App extends Component {
     state = {
         horizontal:true,
-        fontSize:24
+        fontSize:24,
+        outputData:{
+            error:false,
+            data:[]
+        },
+        code:""
     }
     changeFontSize=(e)=>{
         let fontSize = +e.target.value;
@@ -24,12 +36,20 @@ class App extends Component {
             clearTimeout(this.time_out);
             this.time_out = null;
         }
-        this.time_out = setTimeout(()=>this.doEval(code),800)
+        if(code && typeof code === "string" && code.trim()){
+            this.time_out = setTimeout(()=>this.doEval(code),800);
+        }
     }
     doEval=async (code)=>{
+        this.setState({code})
         this.time_out = null;
-        let result = await evaluate(code);
-        console.log(result);
+        let outputData = await evaluate(code);
+        if(outputData && outputData.data){
+            this.setState({outputData})
+        }
+        else{
+            console.log(outputData);
+        }
     }
     render() { 
         return ( <div className="container" style={{height:'100%'}}>
@@ -62,11 +82,11 @@ class App extends Component {
             </div>
             {/* BODY */}
             <div className="container" 
-            style={{...styles.container,height:'100%',flexDirection:`${this.state.horizontal?'row':'column'}`}}>
-                <EvilEditor onChange={this.evaluateCode} fontSize={this.state.fontSize} 
+            style={{...styles.container,transition:`all 0.5s`,height:'100%',flexDirection:`${this.state.horizontal?'row':'column'}`}}>
+                <EvilEditor value={this.state.code} onChange={this.evaluateCode} fontSize={this.state.fontSize} 
                 style={{flex:1,height:'auto',width:`${this.state.horizontal?'auto':'100%'}`}}></EvilEditor>
                 <div style={{...styles.result,fontSize:`${this.state.fontSize}px`,...getBorder(this.state.horizontal)}}>
-                hello
+                    {this.state.outputData.data.map((d,i)=><Output key={i} index={i}>{d}</Output>)}
                 </div>
             </div>
         </div> );
@@ -110,7 +130,9 @@ const styles = {
         backgroundColor:colors.EDITOR_SIDE,
         color:colors.WHITE,
         boxSizing:`border-box`,
-        padding:`0px 10px`,
         fontFamily: 'monospace',
+    },
+    resultParts:{
+        padding:`0.083em 10px`
     }
 }

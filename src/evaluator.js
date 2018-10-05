@@ -8,12 +8,15 @@ const transformer = 'function _tostr(thing){\
     else if(thing===undefined){\
         return "undefined"\
     }\
-    if(Array.isArray(thing)){\
+    else if(Array.isArray(thing)){\
         let mapped = thing.map(_tostr).join(",");\
         return `[${mapped}]`;\
     }\
-    if(typeof thing === "string"){\
+    else if(typeof thing === "string"){\
         return `"${thing}"`;\
+    }\
+    else if(typeof thing === "object"){\
+        return JSON.stringify(thing);\
     }\
     else{\
         try{\
@@ -36,7 +39,7 @@ export default function evaluate(sourcecode){
                 output.push([].map.call(arguments,_tostr));
             }
             ${sourcecode}
-            postMessage(output);
+            postMessage(JSON.stringify(output.map(btoa)));
             `;
         if(worker){
             worker.terminate();
@@ -47,16 +50,17 @@ export default function evaluate(sourcecode){
         worker.onmessage = function(m){
             worker.terminate();
             worker=null;
+            //console.log(m);
             resolve({
                 error:false,
-                message:m
+                data:JSON.parse(m.data).map(atob)
             });
         }
         worker.onerror = function(e){
             //console.log(arguments);
             resolve({
                 error:true,
-                message:`Error: ${e.message} on line ${e.lineno-8}`
+                data:[`Error: ${e.message} on line ${e.lineno-8}`]
             })
         }
     });
