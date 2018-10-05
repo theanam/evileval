@@ -9,8 +9,8 @@ import shareSVG from './assets/share-alt.svg';
 import evaluate from './evaluator';
 // RENDER LIST
 function Output(props){
-    return (<div 
-    style={{...styles.resultParts,backgroundColor:(props.index%2)?'rgba(255,255,255,0.2)':'rgba(0,0,0,0.2)'}}>
+    return (<div
+    style={{...props.style,...styles.resultParts,backgroundColor:(props.index%2)?'rgba(255,255,255,0.2)':'rgba(0,0,0,0.2)'}}>
         {props.children}
     </div>)
 }
@@ -38,6 +38,15 @@ class App extends Component {
         }
         if(code && typeof code === "string" && code.trim()){
             this.time_out = setTimeout(()=>this.doEval(code),800);
+        }
+        else{
+            this.setState({
+                outputData:{
+                    data:[],
+                    error:false,
+                    code:""
+                }
+            })
         }
     }
     doEval=async (code)=>{
@@ -85,8 +94,9 @@ class App extends Component {
             style={{...styles.container,transition:`all 0.5s`,height:'100%',flexDirection:`${this.state.horizontal?'row':'column'}`}}>
                 <EvilEditor value={this.state.code} onChange={this.evaluateCode} fontSize={this.state.fontSize} 
                 style={{flex:1,height:'auto',width:`${this.state.horizontal?'auto':'100%'}`}}></EvilEditor>
-                <div style={{...styles.result,fontSize:`${this.state.fontSize}px`,...getBorder(this.state.horizontal)}}>
-                    {this.state.outputData.data.map((d,i)=><Output key={i} index={i}>{d}</Output>)}
+                <div 
+                style={{...styles.result,fontSize:`${this.state.fontSize}px`,...getBorder(this.state.horizontal)}}>
+                    {this.state.outputData.data.map((d,i)=><Output style={{color:`${this.state.outputData.error?colors.RED:colors.WHITE}`}} key={i} index={i}>{d}</Output>)}
                 </div>
             </div>
         </div> );
