@@ -216,6 +216,7 @@ const styles = {
         color:colors.WHITE,
         boxSizing:`border-box`,
         fontFamily: 'monospace',
+        maxWidth:'50%'
     },
     resultParts:{
         padding:`0.083em 10px`
