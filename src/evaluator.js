@@ -1,5 +1,5 @@
 import {_decode} from './base64';
-const transformer = 'function _tostr(thing){\
+const transformer = 'function __tostr(thing){\
     if(thing!=thing){\
         return "NnN"\
     }\
@@ -30,7 +30,7 @@ const transformer = 'function _tostr(thing){\
 }'
 
 let unicodeSolution = `
-function b64EncodeUnicode(str) {
+function __b64EncodeUnicode(str) {
     // first we use encodeURIComponent to get percent-encoded UTF-8,
     // then we convert the percent encodings into raw bytes which
     // can be fed into btoa.
@@ -46,14 +46,14 @@ export default function evaluate(sourcecode){
         const fbody = `
             ${transformer}
             ${unicodeSolution}
-            var output = [];
+            var __output = [];
             var console = {};
             console.log = function(){
                 if(!arguments) return false;
-                output.push([].map.call(arguments,_tostr));
+                __output.push([].map.call(arguments,__tostr));
             }
             ${sourcecode}
-            postMessage(JSON.stringify(output.map(b64EncodeUnicode)));
+            postMessage(JSON.stringify(__output.map(__b64EncodeUnicode)));
             `;
         if(worker){
             worker.terminate();
