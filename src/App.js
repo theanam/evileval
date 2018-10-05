@@ -5,6 +5,7 @@ import favicon from './assets/favicon.png';
 /*Icons*/
 import splitIcon from './assets/spliticon.png';
 import shareSVG from './assets/share-alt.svg';
+import githubIcon from './assets/gh.svg';
 /*CORE */
 import evaluate from './evaluator';
 import Conditional from 'react-simple-conditional';
@@ -29,6 +30,10 @@ class App extends Component {
         showEmbedWindow:false
     }
     componentDidMount(){
+        // Mobile check
+        if(window.innerWidth<window.innerHeight){
+            this.setState({horizontal:false})
+        }
         //iFrame?
         if(window.self !== window.top){
             this.setState({embedded:true})
@@ -125,6 +130,12 @@ class App extends Component {
                         <img src={shareSVG} 
                         onClick={e=>this.setState({showEmbedWindow:true})}
                         style={{...styles.tool,transform:`scale(1.14)`}} alt="Share"/>
+                    </div>
+                    <div style={styles.toolholder}>
+                        <a style={{display:`block`}} href="https://github.com/theanam/evileval" target="_blank">
+                            <img src={githubIcon} 
+                            style={{...styles.tool,transform:`scale(1)`}} alt="Share"/>
+                        </a>
                     </div>
                 </div>
             </div>
