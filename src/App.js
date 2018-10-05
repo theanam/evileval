@@ -111,7 +111,7 @@ class App extends Component {
                 <img style={{height:30}} src={favicon} alt="EvilEval Icon"/>
                 <div style={{marginLeft:10,flex:1}}>{`{evileval}`}</div>
                 <div className="toolbar" style={styles.toolbar}>
-                    <div style={styles.toolholder}>
+                    <Conditional condition={!this.state.embedded} style={styles.toolholder}>
                         <select name="fontSize" defaultValue={this.state.fontSize} onChange={this.changeFontSize} style={{...styles.tool}}>
                             <option value="14">14px</option>
                             <option value="16">16px</option>
@@ -121,24 +121,30 @@ class App extends Component {
                             <option value="38">38px</option>
                             <option value="42">42px</option>
                         </select>
-                    </div>
-                    <div style={styles.toolholder}>
+                    </Conditional>
+                    <Conditional condition={!this.state.embedded} style={styles.toolholder}>
                         <img 
                         style={{...styles.tool,transform:`rotate(${this.state.horizontal?'0':'90'}deg) scale(0.8)`}} 
                         src={splitIcon} alt="splitIcon"
                         onClick={e=>this.setState({horizontal:!this.state.horizontal})}/>
-                    </div>
-                    <div style={styles.toolholder}>
+                    </Conditional>
+                    <Conditional condition={!this.state.embedded}style={styles.toolholder}>
                         <img src={shareSVG} 
                         onClick={e=>this.setState({showEmbedWindow:true})}
                         style={{...styles.tool,transform:`scale(1.14)`}} alt="Share"/>
-                    </div>
-                    <div style={styles.toolholder}>
+                    </Conditional>
+                    <Conditional condition={!this.state.embedded} style={styles.toolholder}>
                         <a style={{display:`block`}} rel="noopener noreferrer" href="https://github.com/theanam/evileval" target="_blank">
                             <img src={githubIcon} 
                             style={{...styles.tool,transform:`scale(1)`}} alt="Share"/>
                         </a>
-                    </div>
+                    </Conditional>
+                    <Conditional condition={this.state.embedded}>
+                        <a style={{display:`block`}} rel="noopener noreferrer" href={`https://theanam.github.io/evileval/#/s/${_encode(this.state.code)}`} target="_blank">
+                            <img src={shareSVG} 
+                            style={{...styles.tool,transform:`scale(1)`}} alt="Share"/>
+                        </a>
+                    </Conditional>
                 </div>
             </div>
             {/* BODY */}
