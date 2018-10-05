@@ -37,7 +37,8 @@ class App extends Component {
         }
         //iFrame?
         if(window.self !== window.top){
-            this.setState({embedded:true})
+            this.setState({embedded:true});
+            this.changeFontSize("14");
         }
         //take care of the code in the URL
         let hash = window.location.hash;
@@ -77,10 +78,10 @@ class App extends Component {
     }
     copy=(type)=>{
         let target=null;
-        if(type=='embed'){
+        if(type==='embed'){
             target = this.embedref;
         }
-        else if(type=='url'){
+        else if(type==='url'){
             target = this.urlref;
         }
         else{
@@ -111,7 +112,7 @@ class App extends Component {
                 <div style={{marginLeft:10,flex:1}}>{`{evileval}`}</div>
                 <div className="toolbar" style={styles.toolbar}>
                     <div style={styles.toolholder}>
-                        <select name="fontSize" defaultValue={"24"} onChange={this.changeFontSize} style={{...styles.tool}}>
+                        <select name="fontSize" defaultValue={this.state.fontSize} onChange={this.changeFontSize} style={{...styles.tool}}>
                             <option value="14">14px</option>
                             <option value="16">16px</option>
                             <option value="24">24px</option>
@@ -133,7 +134,7 @@ class App extends Component {
                         style={{...styles.tool,transform:`scale(1.14)`}} alt="Share"/>
                     </div>
                     <div style={styles.toolholder}>
-                        <a style={{display:`block`}} href="https://github.com/theanam/evileval" target="_blank">
+                        <a style={{display:`block`}} rel="noopener noreferrer" href="https://github.com/theanam/evileval" target="_blank">
                             <img src={githubIcon} 
                             style={{...styles.tool,transform:`scale(1)`}} alt="Share"/>
                         </a>

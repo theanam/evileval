@@ -1,4 +1,4 @@
-import {_encode,_decode} from './base64';
+import {_decode} from './base64';
 const transformer = 'function _tostr(thing){\
     if(thing!=thing){\
         return "NnN"\
@@ -40,12 +40,6 @@ function b64EncodeUnicode(str) {
     }));
 }
 `
-function b64DecodeUnicode(str) {
-    // Going backwards: from bytestream, to percent-encoding, to original string.
-    return decodeURIComponent(atob(str).split('').map(function(c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
-}
 let worker = null;
 export default function evaluate(sourcecode){
     return new Promise((resolve,reject)=>{
@@ -73,7 +67,7 @@ export default function evaluate(sourcecode){
             //console.log(m);
             resolve({
                 error:false,
-                data:JSON.parse(m.data).map(b64DecodeUnicode)
+                data:JSON.parse(m.data).map(_decode)
             });
         }
         worker.onerror = function(e){
