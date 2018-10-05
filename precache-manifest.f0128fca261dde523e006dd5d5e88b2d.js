@@ -12,19 +12,19 @@ self.__precacheManifest = [
     "url": "/evileval/static/js/runtime~main.303c555d.js"
   },
   {
-    "revision": "484ab6e371b82de45c7b",
-    "url": "/evileval/static/js/main.484ab6e3.chunk.js"
+    "revision": "19870bdc72ec054a9158",
+    "url": "/evileval/static/js/main.19870bdc.chunk.js"
   },
   {
     "revision": "7aaa5b7bbf7568d14cb7",
     "url": "/evileval/static/js/1.7aaa5b7b.chunk.js"
   },
   {
-    "revision": "484ab6e371b82de45c7b",
+    "revision": "19870bdc72ec054a9158",
     "url": "/evileval/static/css/main.87736f7d.chunk.css"
   },
   {
-    "revision": "e0d0c18d4bf5a83cc13465b838f71f62",
+    "revision": "1396a0cffef8dc36a40cea9a413c580f",
     "url": "/evileval/index.html"
   }
 ];
