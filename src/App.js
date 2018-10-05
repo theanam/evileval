@@ -108,7 +108,7 @@ class App extends Component {
             {/* HEADER */}
             <div className="header" style={styles.header}>
                 <img style={{height:30}} src={favicon} alt="EvilEval Icon"/>
-                <div style={{marginLeft:10,flex:1}}>{`{evileval}`}</div>
+                <Conditional condition={!this.state.embedded} style={{marginLeft:10,flex:1}}>{`{evileval}`}</Conditional>
                 <div className="toolbar" style={styles.toolbar}>
                     <Conditional condition={!this.state.embedded} style={styles.toolholder}>
                         <select name="fontSize" defaultValue={this.state.fontSize} onChange={this.changeFontSize} style={{...styles.tool}}>
