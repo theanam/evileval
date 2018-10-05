@@ -1,6 +1,6 @@
 ## Evil Evaluator
 
-Live demo: theanam.github.io/evileval
+Live demo: <https://theanam.github.io/evileval>
 
 
 A small and highly experimental project for live code demonstration in JavaScript during presentations or public speeches.
