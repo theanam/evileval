@@ -1,3 +1,4 @@
+import {_encode,_decode} from './base64';
 const transformer = 'function _tostr(thing){\
     if(thing!=thing){\
         return "NnN"\
@@ -27,11 +28,30 @@ const transformer = 'function _tostr(thing){\
         }\
     }\
 }'
+
+let unicodeSolution = `
+function b64EncodeUnicode(str) {
+    // first we use encodeURIComponent to get percent-encoded UTF-8,
+    // then we convert the percent encodings into raw bytes which
+    // can be fed into btoa.
+    return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
+        function toSolidBytes(match, p1) {
+            return String.fromCharCode('0x' + p1);
+    }));
+}
+`
+function b64DecodeUnicode(str) {
+    // Going backwards: from bytestream, to percent-encoding, to original string.
+    return decodeURIComponent(atob(str).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+}
 let worker = null;
 export default function evaluate(sourcecode){
     return new Promise((resolve,reject)=>{
         const fbody = `
             ${transformer}
+            ${unicodeSolution}
             var output = [];
             var console = {};
             console.log = function(){
@@ -39,7 +59,7 @@ export default function evaluate(sourcecode){
                 output.push([].map.call(arguments,_tostr));
             }
             ${sourcecode}
-            postMessage(JSON.stringify(output.map(btoa)));
+            postMessage(JSON.stringify(output.map(b64EncodeUnicode)));
             `;
         if(worker){
             worker.terminate();
@@ -53,7 +73,7 @@ export default function evaluate(sourcecode){
             //console.log(m);
             resolve({
                 error:false,
-                data:JSON.parse(m.data).map(atob)
+                data:JSON.parse(m.data).map(b64DecodeUnicode)
             });
         }
         worker.onerror = function(e){

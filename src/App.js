@@ -1,7 +1,8 @@
 import React,{Component} from 'react';
 import {colors} from './ values';
-import EvilEditor from './components/theeditor';
+import EvilEditor from './theeditor';
 import favicon from './assets/favicon.png';
+import {_encode,_decode} from './base64';
 /*Icons*/
 import splitIcon from './assets/spliticon.png';
 import shareSVG from './assets/share-alt.svg';
@@ -44,7 +45,7 @@ class App extends Component {
         let rex = /\/s\/(.+)/ig;
         let result = rex.exec(hash);
         if(!result) return true;
-        let code = atob(result[1]);
+        let code = _decode(result[1]);
         this.setState({code,fromURL:true});
         this.evaluateCode(code); 
     }
@@ -153,12 +154,12 @@ class App extends Component {
             <Conditional style={styles.embedw} condition={this.state.showEmbedWindow}>
                 <div style={styles.embedholder}>
                     <p style={{marginTop:15}}>Link to this eval <span style={styles.copybtn} onClick={e=>this.copy('url')}>Copy</span></p>
-                    <input value={`https://theanam.github.io/evileval/#/s/${btoa(this.state.code)}`}
+                    <input value={`https://theanam.github.io/evileval/#/s/${_encode(this.state.code)}`}
                     ref={r=>this.urlref = r} style={styles.embfields}></input>
                     <p style={{marginTop:15}}>Embed Code of this eval <span style={styles.copybtn} onClick={e=>this.copy('embed')}>Copy</span></p>
                     <textarea ref={r=>this.embedref = r}
                     style={{...styles.embfields,height:'5em'}}
-                    value={`<iframe width="100%" height="250px" src="https://theanam.github.io/evileval/#/s/${btoa(this.state.code)}"></iframe>`}></textarea>
+                    value={`<iframe width="100%" height="250px" src="https://theanam.github.io/evileval/#/s/${_encode(this.state.code)}"></iframe>`}></textarea>
                     <div style={{marginTop:20,textAlign:'right'}}>
                         <div style={styles.closebutton} onClick={e=>this.setState({showEmbedWindow:false})}>
                             Close
