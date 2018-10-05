@@ -2,6 +2,7 @@
   "name": "evileval",
   "version": "2.0.0",
   "private": false,
+  "license":"MIT",
   "dependencies": {
     "brace": "^0.11.1",
     "color": "^3.0.0",
