@@ -32,6 +32,7 @@ class App extends Component {
     }
     time_out=null;
     evaluateCode =(code)=> {
+        this.code=code;
         if(this.time_out){
             clearTimeout(this.time_out);
             this.time_out = null;
@@ -44,8 +45,8 @@ class App extends Component {
                 outputData:{
                     data:[],
                     error:false,
-                    code:""
-                }
+                },
+                code:""
             })
         }
     }
@@ -93,9 +94,9 @@ class App extends Component {
             <div className="container" 
             style={{...styles.container,transition:`all 0.5s`,height:'100%',flexDirection:`${this.state.horizontal?'row':'column'}`}}>
                 <EvilEditor value={this.state.code} onChange={this.evaluateCode} fontSize={this.state.fontSize} 
-                style={{flex:1,height:'auto',width:`${this.state.horizontal?'auto':'100%'}`}}></EvilEditor>
+                style={{transition:`all 0.5s`,flex:1,height:'auto',width:`${this.state.horizontal?'auto':'100%'}`}}></EvilEditor>
                 <div 
-                style={{...styles.result,fontSize:`${this.state.fontSize}px`,...getBorder(this.state.horizontal)}}>
+                style={{transition:`all 0.5s`,...styles.result,fontSize:`${this.state.fontSize}px`,...getBorder(this.state.horizontal)}}>
                     {this.state.outputData.data.map((d,i)=><Output style={{color:`${this.state.outputData.error?colors.RED:colors.WHITE}`}} key={i} index={i}>{d}</Output>)}
                 </div>
             </div>
