@@ -10,7 +10,7 @@ const transformer = 'function __tostr(thing){\
         return "undefined"\
     }\
     else if(Array.isArray(thing)){\
-        let mapped = thing.map(_tostr).join(",");\
+        let mapped = thing.map(__tostr).join(",");\
         return `[${mapped}]`;\
     }\
     else if(typeof thing === "string"){\
