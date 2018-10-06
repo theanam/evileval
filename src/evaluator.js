@@ -74,7 +74,7 @@ export default function evaluate(sourcecode){
             //console.log(arguments);
             resolve({
                 error:true,
-                data:[`Error: ${e.message} on line ${e.lineno-8}`]
+                data:[`Error: ${e.message} on line ${e.lineno-19}`]
             })
         }
     });

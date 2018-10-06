@@ -1,15 +1,15 @@
 {
-  "main.css": "/evileval/static/css/main.87736f7d.chunk.css",
-  "main.js": "/evileval/static/js/main.19870bdc.chunk.js",
-  "main.js.map": "/evileval/static/js/main.19870bdc.chunk.js.map",
+  "main.css": "/evileval/static/css/main.a888ac37.chunk.css",
+  "main.js": "/evileval/static/js/main.6cc658c3.chunk.js",
+  "main.js.map": "/evileval/static/js/main.6cc658c3.chunk.js.map",
   "static/js/1.7aaa5b7b.chunk.js": "/evileval/static/js/1.7aaa5b7b.chunk.js",
   "static/js/1.7aaa5b7b.chunk.js.map": "/evileval/static/js/1.7aaa5b7b.chunk.js.map",
   "runtime~main.js": "/evileval/static/js/runtime~main.303c555d.js",
   "runtime~main.js.map": "/evileval/static/js/runtime~main.303c555d.js.map",
-  "static/css/main.87736f7d.chunk.css.map": "/evileval/static/css/main.87736f7d.chunk.css.map",
+  "static/css/main.a888ac37.chunk.css.map": "/evileval/static/css/main.a888ac37.chunk.css.map",
   "static/media/share-alt.svg": "/evileval/static/media/share-alt.42875337.svg",
   "static/media/gh.svg": "/evileval/static/media/gh.8e4808f1.svg",
   "index.html": "/evileval/index.html",
-  "precache-manifest.f0128fca261dde523e006dd5d5e88b2d.js": "/evileval/precache-manifest.f0128fca261dde523e006dd5d5e88b2d.js",
+  "precache-manifest.5f693d55ad9bcd2dcd9efdead79505f1.js": "/evileval/precache-manifest.5f693d55ad9bcd2dcd9efdead79505f1.js",
   "service-worker.js": "/evileval/service-worker.js"
 }
