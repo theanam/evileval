@@ -41,6 +41,7 @@ function __b64EncodeUnicode(str) {
 }
 `
 let worker = null;
+let timer = null;
 export default function evaluate(sourcecode){
     return new Promise((resolve,reject)=>{
         const fbody = `
@@ -61,9 +62,23 @@ export default function evaluate(sourcecode){
         }
         //return console.log(fbody);
         worker = new Worker(window.URL.createObjectURL(new Blob([fbody])));
+        //Timeout for long running tasks
+        timer = setTimeout(()=>{
+            if(!worker) return false;
+            if(worker) worker.terminate();
+            worker = null;
+            resolve({
+                error:true,
+                data:[`Error: Script took too long. Try looking for infinite loop`]
+            })
+        },5000);
         worker.onmessage = function(m){
             worker.terminate();
             worker=null;
+            if(timer){
+                clearTimeout(timer);
+                timer=null;
+            }
             //console.log(m);
             resolve({
                 error:false,
