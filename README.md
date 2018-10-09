@@ -5,6 +5,8 @@ Live demo: <https://theanam.github.io/evileval>
 
 A small and highly experimental project for live code demonstration in JavaScript during presentations or public speeches.
 
+This tool comes bundled with [Babel Standalone](https://babeljs.io/docs/en/next/babel-standalone.html) ES2015 preset. 
+
 ### How to develop
 
 Clone the repository and run `yarn` or `npm install` to get all the dependencies. Once the dependencies are installed, run `yarn start` or `npm start` to start the development server.

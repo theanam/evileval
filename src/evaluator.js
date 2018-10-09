@@ -1,4 +1,5 @@
 import {_decode} from './base64';
+const Babel = require('@babel/standalone');
 const transformer = 'function __tostr(thing){\
     if(thing!=thing){\
         return "NnN"\
@@ -56,12 +57,23 @@ export default function evaluate(sourcecode){
             ${sourcecode}
             postMessage(JSON.stringify(__output.map(__b64EncodeUnicode)));
             `;
+        let transformed = fbody;
+        try{
+            transformed = Babel.transform(fbody,{ presets: ['es2015'] }).code;
+        }catch(e){
+            resolve({
+                error:true,
+                data:[e.message || `Error: Babel Could not Transform the script`]
+            });
+            return true;
+        }
         if(worker){
             worker.terminate();
             worker = null;
         }
+        //console.log(transformed);
         //return console.log(fbody);
-        worker = new Worker(window.URL.createObjectURL(new Blob([fbody])));
+        worker = new Worker(window.URL.createObjectURL(new Blob([transformed])));
         //Timeout for long running tasks
         timer = setTimeout(()=>{
             if(!worker) return false;
@@ -70,7 +82,7 @@ export default function evaluate(sourcecode){
             resolve({
                 error:true,
                 data:[`Error: Script took too long. Try looking for infinite loop`]
-            })
+            });
         },5000);
         worker.onmessage = function(m){
             worker.terminate();
