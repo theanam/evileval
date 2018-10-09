@@ -104,11 +104,11 @@ class App extends Component {
         }
     }
     render() { 
-        return ( <div className="container" style={{height:'100%'}}>
+        return ( <div className="container" style={{height:'100%',display:'flex',flexDirection:'column'}}>
             {/* HEADER */}
             <div className="header" style={styles.header}>
                 <img style={{height:30}} src={favicon} alt="EvilEval Icon"/>
-                <Conditional condition={!this.state.embedded} style={{marginLeft:10}}>{`{evileval}`}</Conditional>
+                <Conditional condition={!this.state.embedded} style={{marginLeft:10,fontFamily:'monospace',fontSize:`1.1em`}}>{`{evileval}`}</Conditional>
                 <div style={{flex:1}}></div>
                 <div className="toolbar" style={styles.toolbar}>
                     <Conditional condition={!this.state.embedded} style={styles.toolholder}>
@@ -149,7 +149,7 @@ class App extends Component {
             </div>
             {/* BODY */}
             <div className="container" 
-            style={{...styles.container,transition:`all 0.5s`,height:'100%',flexDirection:`${this.state.horizontal?'row':'column'}`}}>
+            style={{...styles.container,transition:`all 0.5s`,flex:1,flexDirection:`${this.state.horizontal?'row':'column'}`}}>
                 <EvilEditor value={this.state.code} onChange={this.evaluateCode} fontSize={this.state.fontSize} 
                 style={{transition:`all 0.5s`,flex:1,height:'auto',width:`${this.state.horizontal?'auto':'100%'}`}}></EvilEditor>
                 <div 
