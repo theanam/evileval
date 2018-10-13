@@ -216,7 +216,8 @@ const styles = {
         backgroundColor:colors.EDITOR_SIDE,
         color:colors.WHITE,
         boxSizing:`border-box`,
-        fontFamily: 'monospace'
+        fontFamily: 'monospace',
+        overflow:'scroll'
     },
     resultParts:{
         padding:`0.083em 10px`
