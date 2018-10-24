@@ -1,1 +1,0 @@
-{"version":3,"sources":["/Users/anamahmed/work/evileval/src/index.css"],"names":[],"mappings":"AAAA,EACI,SAAS,AACT,SAAU,CACb,AACD,UAEI,sBAAwB,CAC3B,AACD,2BAHI,WAAY,CAKf","file":"main.a1e2949d.chunk.css","sourcesContent":["*{\n    margin:0;\n    padding:0;\n}\nhtml,body{\n    height:100%;\n    font-family: sans-serif;\n}\n.root,.container{\n    height:100%;\n}\n"]}
