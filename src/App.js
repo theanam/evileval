@@ -7,9 +7,15 @@ import {_encode,_decode} from './base64';
 import splitIcon from './assets/spliticon.png';
 import shareSVG from './assets/share-alt.svg';
 import githubIcon from './assets/gh.svg';
+import babelIcon from './assets/babel.svg';
+import iconOn from './assets/toggle-on.svg';
+import iconOff from './assets/toggle-off.svg';
 /*CORE */
 import evaluate from './evaluator';
 import Conditional from 'react-simple-conditional';
+let _jst = function(ob){
+    return JSON.stringify(ob);
+}
 // RENDER LIST
 function Output(props){
     return (<div
@@ -28,7 +34,8 @@ class App extends Component {
         code:"",
         embedded:false,
         fromURL:false,
-        showEmbedWindow:false
+        showEmbedWindow:false,
+        babel:true
     }
     componentDidMount(){
         // Mobile check
@@ -45,9 +52,19 @@ class App extends Component {
         let rex = /\/s\/(.+)/ig;
         let result = rex.exec(hash);
         if(!result) return true;
-        let code = _decode(result[1]);
-        this.setState({code,fromURL:true});
-        this.evaluateCode(code); 
+        let _code = _decode(result[1]);
+        let code = _code;
+        let babel = true;
+        let fromURL = true;
+        try{
+            _code = JSON.parse(_code);
+            code  = _code.code;
+            babel = _code.babel; 
+        }catch(e){
+            console.log("Old Embed without babel information");
+        }finally{
+            this.setState({code,babel,fromURL});
+        }
     }
     changeFontSize=(e)=>{
         let fontSize = +e.target.value;
@@ -95,13 +112,17 @@ class App extends Component {
     doEval=async (code)=>{
         this.setState({code})
         this.time_out = null;
-        let outputData = await evaluate(code);
+        let outputData = await evaluate(code,this.state.babel);
         if(outputData && outputData.data){
             this.setState({outputData})
         }
         else{
             console.log(outputData);
         }
+    }
+    toggleBabel=()=>{
+        this.setState({babel:!this.state.babel});
+        this.evaluateCode(this.state.code);
     }
     render() { 
         return ( <div className="container" style={{height:'100%',display:'flex',flexDirection:'column'}}>
@@ -122,6 +143,14 @@ class App extends Component {
                             <option value="42">42px</option>
                         </select>
                     </Conditional>
+                    <Conditional condition={!this.state.embedded}
+                    onClick={this.toggleBabel}
+                     style={{...styles.toolholder}}>
+                        <img src={babelIcon} style={{height:20}} alt="Babel"></img>
+                        <img src={this.state.babel?iconOn:iconOff} 
+                        style={{...styles.tool,transform:'scale(1.9)',marginLeft:10}} 
+                        alt="babelState"></img>
+                    </Conditional>
                     <Conditional condition={!this.state.embedded} style={styles.toolholder}>
                         <img 
                         style={{...styles.tool,transform:`rotate(${this.state.horizontal?'0':'90'}deg) scale(0.8)`}} 
@@ -140,7 +169,7 @@ class App extends Component {
                         </a>
                     </Conditional>
                     <Conditional condition={this.state.embedded}>
-                        <a style={{display:`block`}} rel="noopener noreferrer" href={`https://theanam.github.io/evileval/#/s/${_encode(this.state.code)}`} target="_blank">
+                        <a style={{display:`block`}} rel="noopener noreferrer" href={`https://theanam.github.io/evileval/#/s/${_encode(_jst({code:this.state.code,babel:this.state.babel}))}`} target="_blank">
                             <img src={shareSVG} 
                             style={{...styles.tool,transform:`scale(1)`}} alt="Share"/>
                         </a>
@@ -161,12 +190,12 @@ class App extends Component {
             <Conditional style={styles.embedw} condition={this.state.showEmbedWindow}>
                 <div style={styles.embedholder}>
                     <p style={{marginTop:15}}>Link to this eval <span style={styles.copybtn} onClick={e=>this.copy('url')}>Copy</span></p>
-                    <input value={`https://theanam.github.io/evileval/#/s/${_encode(this.state.code)}`}
+                    <input value={`https://theanam.github.io/evileval/#/s/${_encode(_jst({code:this.state.code,babel:this.state.babel}))}`}
                     ref={r=>this.urlref = r} style={styles.embfields}></input>
                     <p style={{marginTop:15}}>Embed Code of this eval <span style={styles.copybtn} onClick={e=>this.copy('embed')}>Copy</span></p>
                     <textarea ref={r=>this.embedref = r}
                     style={{...styles.embfields,height:'5em'}}
-                    value={`<iframe width="100%" height="250px" src="https://theanam.github.io/evileval/#/s/${_encode(this.state.code)}"></iframe>`}></textarea>
+                    value={`<iframe width="100%" height="250px" src="https://theanam.github.io/evileval/#/s/${_encode(_jst({code:this.state.code,babel:this.state.babel}))}"></iframe>`}></textarea>
                     <div style={{marginTop:20,textAlign:'right'}}>
                         <div style={styles.closebutton} onClick={e=>this.setState({showEmbedWindow:false})}>
                             Close
@@ -202,7 +231,9 @@ const styles = {
     },
     toolholder:{
         margin:`0px 10px`,
-        cursor:'pointer'
+        cursor:'pointer',
+        display:'flex',
+        alignItems: 'center',
     },
     tool:{
         height:`25px`,

@@ -43,7 +43,7 @@ function __b64EncodeUnicode(str) {
 `
 let worker = null;
 let timer = null;
-export default function evaluate(sourcecode){
+export default function evaluate(sourcecode,babel_enabled){
     return new Promise((resolve,reject)=>{
         const fbody = `
             ${transformer}
@@ -54,19 +54,27 @@ export default function evaluate(sourcecode){
                 if(!arguments) return false;
                 __output.push([].map.call(arguments,__tostr));
             }
+            "anchor"
             ${sourcecode}
             postMessage(JSON.stringify(__output.map(__b64EncodeUnicode)));
             `;
         let transformed = fbody;
-        try{
-            transformed = Babel.transform(fbody,{ presets: ['es2015'] }).code;
-        }catch(e){
-            resolve({
-                error:true,
-                data:[e.message || `Error: Babel Could not Transform the script`]
-            });
-            return true;
+        if(babel_enabled){
+            console.log("Transpiling Code with Babel");
+            try{
+                transformed = Babel.transform(fbody,{ presets: ['es2015'] }).code;
+            }catch(e){
+                resolve({
+                    error:true,
+                    data:[e.message || `Error: Babel Could not Transform the script`]
+                });
+                return true;
+            }
         }
+        // Find the line number
+        let partial = transformed.substring(0,transformed.indexOf("anchor"));
+        let rex = /\n/g;
+        let finalLineNumber = partial.match(rex).length+1;
         if(worker){
             worker.terminate();
             worker = null;
@@ -101,7 +109,7 @@ export default function evaluate(sourcecode){
             //console.log(arguments);
             resolve({
                 error:true,
-                data:[`Error: ${e.message} on line ${e.lineno-19}`]
+                data:[`Error: ${e.message} on line ${e.lineno-finalLineNumber}`]
             })
         }
     });
