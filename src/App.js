@@ -181,7 +181,7 @@ class App extends Component {
             style={{...styles.container,transition:`all 0.5s`,flex:1,flexDirection:`${this.state.horizontal?'row':'column'}`}}>
                 <EvilEditor value={this.state.code} onChange={this.evaluateCode} fontSize={this.state.fontSize} 
                 style={{transition:`all 0.5s`,flex:1,height:'auto',width:`${this.state.horizontal?'auto':'100%'}`}}></EvilEditor>
-                <div 
+                <div className="resultview"
                 style={{transition:`all 0.5s`,...styles.result,fontSize:`${this.state.fontSize}px`,...getBorder(this.state.horizontal)}}>
                     {this.state.outputData.data.map((d,i)=><Output style={{color:`${this.state.outputData.error?colors.RED:colors.WHITE}`}} key={i} index={i}>{d}</Output>)}
                 </div>
@@ -247,8 +247,7 @@ const styles = {
         backgroundColor:colors.EDITOR_SIDE,
         color:colors.WHITE,
         boxSizing:`border-box`,
-        fontFamily: 'monospace',
-        overflow:'scroll'
+        fontFamily: 'monospace'
     },
     resultParts:{
         padding:`0.083em 10px`
