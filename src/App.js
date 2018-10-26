@@ -147,7 +147,7 @@ class App extends Component {
                     <Conditional condition={!this.state.embedded}
                     onClick={this.toggleBabel}
                      style={{...styles.toolholder}}>
-                        <img src={babelIcon} style={{height:20}} alt="Babel"></img>
+                        <img src={babelIcon} style={{height:20,transform:`translateY(2px)`}} alt="Babel"></img>
                         <img src={this.state.babel?iconOn:iconOff} 
                         style={{...styles.tool,transform:'scale(1.9)',marginLeft:10}} 
                         alt="babelState"></img>
