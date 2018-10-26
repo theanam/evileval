@@ -13,7 +13,7 @@
     "react-scripts": "2.0.4",
     "react-simple-conditional": "^0.0.1"
   },
-  "homepage": "https://theanam.github.io/evileval",
+  "homepage": "https://evileval.io",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
