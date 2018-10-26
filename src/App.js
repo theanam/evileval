@@ -163,13 +163,13 @@ class App extends Component {
                         style={{...styles.tool,transform:`scale(1.14)`}} alt="Share"/>
                     </Conditional>
                     <Conditional condition={!this.state.embedded} style={styles.toolholder}>
-                        <a style={{display:`block`}} rel="noopener noreferrer" href="https://github.com/theanam/evileval" target="_blank">
+                        <a style={{display:`block`}} rel="noopener noreferrer" href="https://evileval.io" target="_blank">
                             <img src={githubIcon} 
                             style={{...styles.tool,transform:`scale(1)`}} alt="Share"/>
                         </a>
                     </Conditional>
                     <Conditional condition={this.state.embedded}>
-                        <a style={{display:`block`}} rel="noopener noreferrer" href={`https://theanam.github.io/evileval/#/s/${_encode(_jst({code:this.state.code,babel:this.state.babel}))}`} target="_blank">
+                        <a style={{display:`block`}} rel="noopener noreferrer" href={`https://evileval.io/#/s/${_encode(_jst({code:this.state.code,babel:this.state.babel}))}`} target="_blank">
                             <img src={shareSVG} 
                             style={{...styles.tool,transform:`scale(1)`}} alt="Share"/>
                         </a>
@@ -190,12 +190,12 @@ class App extends Component {
             <Conditional style={styles.embedw} condition={this.state.showEmbedWindow}>
                 <div style={styles.embedholder}>
                     <p style={{marginTop:15}}>Link to this eval <span style={styles.copybtn} onClick={e=>this.copy('url')}>Copy</span></p>
-                    <input value={`https://theanam.github.io/evileval/#/s/${_encode(_jst({code:this.state.code,babel:this.state.babel}))}`}
+                    <input value={`https://evileval.io/#/s/${_encode(_jst({code:this.state.code,babel:this.state.babel}))}`}
                     ref={r=>this.urlref = r} style={styles.embfields}></input>
                     <p style={{marginTop:15}}>Embed Code of this eval <span style={styles.copybtn} onClick={e=>this.copy('embed')}>Copy</span></p>
                     <textarea ref={r=>this.embedref = r}
                     style={{...styles.embfields,height:'5em'}}
-                    value={`<iframe width="100%" height="250px" src="https://theanam.github.io/evileval/#/s/${_encode(_jst({code:this.state.code,babel:this.state.babel}))}"></iframe>`}></textarea>
+                    value={`<iframe width="100%" height="250px" src="https://evileval.io/#/s/${_encode(_jst({code:this.state.code,babel:this.state.babel}))}"></iframe>`}></textarea>
                     <div style={{marginTop:20,textAlign:'right'}}>
                         <div style={styles.closebutton} onClick={e=>this.setState({showEmbedWindow:false})}>
                             Close
