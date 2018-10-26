@@ -64,6 +64,7 @@ class App extends Component {
             console.log("Old Embed without babel information");
         }finally{
             this.setState({code,babel,fromURL});
+            this.evaluateCode(code);
         }
     }
     changeFontSize=(e)=>{
