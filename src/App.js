@@ -225,6 +225,7 @@ const styles = {
         padding:`8px 10px`,
         color:colors.WHITE,
         backgroundColor:colors.DARK,
+        overflowX:'hidden',
         boxShadow:`0px 0px 4px 0px ${colors.EDITOR_HIGHLIGHT}`
     },
     toolbar:{
