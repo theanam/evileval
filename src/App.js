@@ -130,7 +130,7 @@ class App extends Component {
             {/* HEADER */}
             <div className="header" style={styles.header}>
                 <img style={{height:30}} src={favicon} alt="EvilEval Icon"/>
-                <Conditional condition={!this.state.embedded} style={{marginLeft:10,fontFamily:'monospace',fontSize:`1.1em`}}>{`{evileval}`}</Conditional>
+                <Conditional condition={!this.state.embedded} className="logoname" style={{marginLeft:10,fontFamily:'monospace',fontSize:`1.1em`}}>{`{evileval}`}</Conditional>
                 <div style={{flex:1}}></div>
                 <div className="toolbar" style={styles.toolbar}>
                     <Conditional condition={!this.state.embedded} style={styles.toolholder}>
